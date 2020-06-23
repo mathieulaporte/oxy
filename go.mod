@@ -1,4 +1,4 @@
-module github.com/vulcand/oxy
+module github.com/mathieulaporte/oxy
 
 go 1.13
 

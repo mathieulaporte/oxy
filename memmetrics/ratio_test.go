@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/vulcand/oxy/testutils"
+	"github.com/mathieulaporte/oxy/testutils"
 )
 
 func TestNewRatioCounterInvalidParams(t *testing.T) {

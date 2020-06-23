@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/vulcand/oxy/utils"
+	"github.com/mathieulaporte/oxy/utils"
 )
 
 // Response response model
