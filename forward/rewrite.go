@@ -25,20 +25,19 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 		utils.RemoveHeaders(req.Header, XHeaders...)
 	}
 
-	if clientIP, _, err := net.SplitHostPort(req.RemoteAddr); err == nil {
-		clientIP = ipv6fix(clientIP)
-		// If not websocket, done in http.ReverseProxy
-		if IsWebsocketRequest(req) {
-			if prior, ok := req.Header[XForwardedFor]; ok {
-				req.Header.Set(XForwardedFor, strings.Join(prior, ", ")+", "+clientIP)
-			} else {
-				req.Header.Set(XForwardedFor, clientIP)
-			}
+	clientIP, _, _ := net.SplitHostPort(req.RemoteAddr)
+	clientIP = ipv6fix(clientIP)
+	// If not websocket, done in http.ReverseProxy
+	if IsWebsocketRequest(req) {
+		if prior, ok := req.Header[XForwardedFor]; ok {
+			req.Header.Set(XForwardedFor, strings.Join(prior, ", ")+", "+clientIP)
+		} else {
+			req.Header.Set(XForwardedFor, clientIP)
 		}
-
-		if req.Header.Get(XRealIp) == "" {
-			req.Header.Set(XRealIp, clientIP)
-		}
+	}
+	
+	if req.Header.Get(XRealIp) == "" {
+		req.Header.Set(XRealIp, clientIP)
 	}
 
 	xfProto := req.Header.Get(XForwardedProto)
