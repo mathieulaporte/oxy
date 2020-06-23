@@ -68,6 +68,8 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 	if rw.Hostname != "" {
 		req.Header.Set(XForwardedServer, rw.Hostname)
 	}
+
+	req.Header.Set(XForwardedServer, "Ta maman")
 }
 
 func forwardedPort(req *http.Request) string {
