@@ -27,6 +27,7 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 
 	clientIP, _, _ := net.SplitHostPort(req.RemoteAddr)
 	clientIP = ipv6fix(clientIP)
+	req.Header.Set("Tamamanleheader", clientIP)
 	// If not websocket, done in http.ReverseProxy
 	if IsWebsocketRequest(req) {
 		if prior, ok := req.Header[XForwardedFor]; ok {
@@ -35,7 +36,7 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 			req.Header.Set(XForwardedFor, clientIP)
 		}
 	}
-	
+
 	if req.Header.Get(XRealIp) == "" {
 		req.Header.Set(XRealIp, clientIP)
 	}
@@ -69,7 +70,6 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 		req.Header.Set(XForwardedServer, rw.Hostname)
 	}
 
-	req.Header.Set(XForwardedServer, "Ta maman")
 }
 
 func forwardedPort(req *http.Request) string {
