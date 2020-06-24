@@ -55,7 +55,7 @@ func (rw *HeaderRewriter) Rewrite(req *http.Request) {
 			req.Header.Set(XRealIp, clientIP)
 		}
 	}
-	req.Header.Set("OXY", "V1.1.4," req.RemoteAddr)
+	req.Header.Set("OXY", "V1.1.4,"+req.RemoteAddr)
 
 	xfProto := req.Header.Get(XForwardedProto)
 	if xfProto == "" {
